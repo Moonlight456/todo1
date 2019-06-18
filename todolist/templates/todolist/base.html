@@ -7,7 +7,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>编辑待办事项</title>
+    <title>
+        {% block 标题 %}
+            未命名
+        {% endblock %}
+    </title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -23,9 +27,11 @@
         nav input{
           width: 39%!important;
         }
-        #form-edit{
-           margin-left:8em;
-           margin-right:8em;
+        .no-underline>tr>td>a:hover{
+          text-decoration: none;
+        }
+        #line-through{
+          text-decoration: line-through;
         }
     </style>
   </head>
@@ -38,33 +44,26 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
-            <a class="nav-link" href="#">待办清单</a>
+          <li class="nav-item {% block 待办高亮 %} {% endblock %}">
+{#            <a class="nav-link" href="/todo/home/">待办清单</a>#}
+              <a class="nav-link" href="{% url 'todolist:主页' %}">待办清单</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">关于本站</a>
+          <li class="nav-item " {% block 关于高亮 %}{% endblock %}>
+            <a class="nav-link" href="{% url 'todolist:关于' %}">关于本站</a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0 col-7 justify-content-end">
-          <input class="form-control mr-sm-2 " type="text" placeholder="待办事项" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">添加</button>
+        <form class="form-inline mt-2 mt-md-0 col-7 justify-content-end" action="" method="post">
+            {% csrf_token %}
+
+          <input name="待办事项" class="form-control mr-sm-2" type="text" placeholder="待办事项" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">添加</button>
         </form>
       </div>
     </nav>
 
-    <main role="main" class="container">
-      <br>
-      <form id="form-edit">
-        <div class="form-group">
-          <label for="editTodo"></label>
-          <input class="form-control form-control-lg" id="editTodo" type="text" value="遛狗">
-          <small id="help" class="form-text text-muted">在这里编辑待办事项</small>
-        </div>
-        <button type="button" class="btn btn-primary btn-lg btn-block">提交</button>
-      </form>
-    </main>
-
-    <!-- Bootstrap core JavaScript
+    {% block 主体 %}
+    {% endblock %}
+     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
