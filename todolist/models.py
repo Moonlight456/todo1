@@ -13,3 +13,4 @@ class TODO(models.Model):
 
     class Meta():
         db_table = 'todolist'
+
